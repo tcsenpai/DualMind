@@ -26,9 +26,12 @@ def run_cli():
     ollama_endpoint = os.getenv("OLLAMA_ENDPOINT")
     model_1 = os.getenv("MODEL_1")
     model_2 = os.getenv("MODEL_2")
-    
-    system_prompt_1 = load_system_prompt("system_prompt_1.txt")
-    system_prompt_2 = load_system_prompt("system_prompt_2.txt")
+
+    system_prompt_1_file = os.getenv("CUSTOM_SYSTEM_PROMPT_1", "system_prompt_1.txt")
+    system_prompt_2_file = os.getenv("CUSTOM_SYSTEM_PROMPT_2", "system_prompt_2.txt")
+        
+    system_prompt_1 = load_system_prompt(system_prompt_1_file)
+    system_prompt_2 = load_system_prompt(system_prompt_2_file)
     
     initial_prompt = os.getenv("INITIAL_PROMPT", "Let's discuss the future of AI. What are your thoughts on its potential impact on society?")
     

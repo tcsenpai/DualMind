@@ -1,3 +1,4 @@
 conversation_log_*
 .env
 __pycache__
+custom_prompt*.txt

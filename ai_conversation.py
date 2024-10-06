@@ -1,4 +1,5 @@
 from ollama_client import OllamaClient
+import ollama
 from termcolor import colored
 import datetime
 
@@ -27,12 +28,17 @@ class AIConversation:
         print(colored("Press CTRL+C to stop the conversation.", "red"))
         print()
 
+        role = "user"
+
         try:
             i = 0
             while num_exchanges == 0 or i < num_exchanges:
                 response = self.ollama_client.generate(
                     current_model, current_message, current_system_prompt
                 )
+
+                # Adding the name of the model to the response
+                response = f"{current_model}: {response}"
 
                 model_name = f"{current_model.upper()}:"
                 formatted_response = f"{model_name}\n{response}\n"
@@ -42,7 +48,13 @@ class AIConversation:
                 else:
                     print(colored(formatted_response, color_2))
 
-                messages.append({"role": "assistant", "content": formatted_response})
+                messages.append({"role": role, "content": formatted_response})
+
+                # Switch roles
+                if role == "user":
+                    role = "assistant"
+                else:
+                    role = "user"
 
                 current_message = response
                 if current_model == self.model_1:
@@ -54,6 +66,10 @@ class AIConversation:
 
                 print(colored("---", "magenta"))
                 print()
+
+                if current_message.strip().endswith("{{end_conversation}}"):
+                    print(colored("Conversation ended by the AI.", "green"))
+                    break
 
                 i += 1
 
