@@ -86,7 +86,6 @@ The appearance of the Streamlit interface can be customized by modifying the `st
 
 - `main.py`: Entry point of the application
 - `ai_conversation.py`: Core logic for AI conversations
-- `ollama_client.py`: Client for interacting with the Ollama API
 - `streamlit_app.py`: Streamlit web interface implementation
 - `style/custom.css`: Custom styles for the web interface
 - `run_cli.sh`: Shell script to run the CLI version

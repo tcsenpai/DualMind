@@ -3,3 +3,4 @@ requests
 termcolor
 streamlit
 Pillow
+tiktoken
