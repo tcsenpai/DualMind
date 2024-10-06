@@ -12,7 +12,8 @@ class AIConversation:
         self.messages_1 = [{"role": "system", "content": system_prompt_1}]
         self.messages_2 = [{"role": "system", "content": system_prompt_2}]
         self.client = ollama.Client(ollama_endpoint)
-    
+        self.ollama_endpoint = ollama_endpoint
+
     def start_conversation(self, initial_message, num_exchanges=0):
         current_message = initial_message
         color_1 = "cyan"
@@ -29,12 +30,17 @@ class AIConversation:
 
         try:
             i = 0
+            active_ai = 0 # Starting with AI 1
             while num_exchanges == 0 or i < num_exchanges:
-                if self.current_model == self.model_1:
+                
+
+                if active_ai == 0:
+                    name = "AI 1"
                     messages = self.messages_1
                     other_messages = self.messages_2
                     color = color_1
                 else:
+                    name = "AI 2"
                     messages = self.messages_2
                     other_messages = self.messages_1
                     color = color_2
@@ -45,7 +51,7 @@ class AIConversation:
                 response = self.client.chat(model=self.current_model, messages=messages)
                 response_content = response['message']['content']
 
-                model_name = f"{self.current_model.upper()}:"
+                model_name = f"{self.current_model.upper()} ({name}):"
                 formatted_response = f"{model_name}\n{response_content}\n"
 
                 print(colored(formatted_response, color))
@@ -55,7 +61,8 @@ class AIConversation:
                 other_messages.append({"role": "user", "content": response_content})
 
                 current_message = response_content
-                self.current_model = self.model_2 if self.current_model == self.model_1 else self.model_1
+                self.current_model = self.model_2 if active_ai == 1 else self.model_1
+                active_ai = 1 if active_ai == 0 else 0
 
                 print(colored("---", "magenta"))
                 print()
@@ -72,29 +79,6 @@ class AIConversation:
         print(colored("Conversation ended.", "green"))
         self.save_conversation_log(conversation_log)
 
-    def get_conversation_response(self, current_message):
-        if self.current_model == self.model_1:
-            messages = self.messages_1
-            other_messages = self.messages_2
-        else:
-            messages = self.messages_2
-            other_messages = self.messages_1
-
-        messages.append({"role": "user", "content": current_message})
-        other_messages.append({"role": "assistant", "content": current_message})
-
-        response = self.client.chat(model=self.current_model, messages=messages)
-        response_content = response['message']['content']
-
-        model_name = f"{self.current_model.upper()}:"
-        formatted_response = f"{model_name}\n{response_content}\n"
-
-        messages.append({"role": "assistant", "content": response_content})
-        other_messages.append({"role": "user", "content": response_content})
-
-        self.current_model = self.model_2 if self.current_model == self.model_1 else self.model_1
-
-        return formatted_response
 
     def save_conversation_log(self, messages, filename=None):
         if filename is None:
@@ -102,7 +86,7 @@ class AIConversation:
             filename = f"conversation_log_{timestamp}.txt"
 
         log_content = f"Conversation Log - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-        log_content += f"Ollama Endpoint: {self.ollama_client.endpoint}\n"
+        log_content += f"Ollama Endpoint: {self.ollama_endpoint}\n"
         log_content += f"Model 1: {self.model_1}\n"
         log_content += f"Model 2: {self.model_2}\n"
         log_content += f"System Prompt 1:\n{self.system_prompt_1}\n\n"

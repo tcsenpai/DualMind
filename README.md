@@ -40,13 +40,17 @@ Please refer to [Ollama](https://ollama.com/download) to install Ollama on your 
    ```
 
 3. Set up your environment variables by creating a `.env` file in the project root:
+
    ```
    OLLAMA_ENDPOINT=http://localhost:11434
    MODEL_1=llama2
    MODEL_2=mistral
    INITIAL_PROMPT="Let's discuss the future of AI. What are your thoughts on its potential impact on society?"
    ```
+
    Feel free to use the env.example file as a template.
+
+   **Note:** The INITIAL_PROMPT is the first message that will be sent and it will be send on behalf of the second AI to the first AI.
 
 ## Usage
 
