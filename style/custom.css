@@ -1,0 +1,165 @@
+/* Custom styles for the AI Conversation app */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #2d3748;
+    color: #2d3748;
+}
+
+.stApp {
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: black;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    padding: 30px;
+}
+
+.main-title {
+    color: #2c5282;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.sidebar .stButton > button {
+    width: 100%;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    background-color: #4299e1;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.sidebar .stButton > button:hover {
+    background-color: #3182ce;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.chat-message {
+    padding: 1.5rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    animation: fadeIn 0.5s ease-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.user-message {
+    background-color: #ebf4ff;
+}
+
+.assistant-message {
+    background-color: #e6fffa;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.save-button {
+    background-color: #48bb78 !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.save-button:hover {
+    background-color: #38a169 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.download-button {
+    background-color: #4c51bf !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.download-button:hover {
+    background-color: #434190 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    color: #718096;
+}
+
+/* Additional styles for better harmony and rounded corners */
+.stTextInput > div > div > input {
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stTextArea > div > div > textarea {
+    border-radius: 15px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stSelectbox > div > div > div {
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.stExpander {
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Styles for sidebar */
+.sidebar .stSidebar {
+    background-color: #f0f4f8;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding: 2rem;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+/* Styles for main content area */
+.stApp > header {
+    background-color: transparent !important;
+}
+
+.stApp > header + div {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding-top: 2rem;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

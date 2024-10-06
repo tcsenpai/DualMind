@@ -1,0 +1,3 @@
+conversation_log_*
+.env
+__pycache__
