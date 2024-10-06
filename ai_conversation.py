@@ -30,7 +30,7 @@ class AIConversation:
 
         try:
             i = 0
-            active_ai = 0 # Starting with AI 1
+            active_ai = 1 # Starting with AI 1
             while num_exchanges == 0 or i < num_exchanges:
                 
 
@@ -48,6 +48,7 @@ class AIConversation:
                 messages.append({"role": "user", "content": current_message})
                 other_messages.append({"role": "assistant", "content": current_message})
 
+                #print(colored(f"Conversation with {name} ({self.current_model})", "blue"))
                 response = self.client.chat(model=self.current_model, messages=messages)
                 response_content = response['message']['content']
 
