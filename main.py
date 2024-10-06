@@ -35,7 +35,7 @@ def run_cli():
     
     initial_prompt = os.getenv("INITIAL_PROMPT", "Let's discuss the future of AI. What are your thoughts on its potential impact on society?")
     
-    conversation = AIConversation(ollama_endpoint, model_1, model_2, system_prompt_1, system_prompt_2)
+    conversation = AIConversation(model_1, model_2, system_prompt_1, system_prompt_2, ollama_endpoint)
     conversation.start_conversation(initial_prompt, num_exchanges=0)
 
 def run_streamlit():
