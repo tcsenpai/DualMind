@@ -49,8 +49,18 @@ class AIConversation:
                 other_messages.append({"role": "assistant", "content": current_message})
 
                 #print(colored(f"Conversation with {name} ({self.current_model})", "blue"))
-                response = self.client.chat(model=self.current_model, messages=messages)
+                response = self.client.chat(
+                    model=self.current_model, 
+                    messages=messages,
+                    options={
+                        "temperature": 0.7,  # Adjust this value to control randomness
+                        "repeat_penalty": 1.2,  # Penalize repetition
+                    }
+                )
                 response_content = response['message']['content']
+
+                # Post-process to remove repetition
+                response_content = self.remove_repetition(response_content)
 
                 model_name = f"{self.current_model.upper()} ({name}):"
                 formatted_response = f"{model_name}\n{response_content}\n"
@@ -62,6 +72,8 @@ class AIConversation:
                 other_messages.append({"role": "user", "content": response_content})
 
                 current_message = response_content
+
+                # Switching the AI
                 self.current_model = self.model_2 if active_ai == 1 else self.model_1
                 active_ai = 1 if active_ai == 0 else 0
 
@@ -101,3 +113,25 @@ class AIConversation:
             f.write(log_content)
 
         print(f"Conversation log saved to {filename}")
+
+    def remove_repetition(self, text):
+        # Split the text into sentences
+        split_tokens = [".", "!", "?"]
+        sentences = []
+        current_sentence = ""
+        for char in text:
+            current_sentence += char
+            if char in split_tokens:
+                sentences.append(current_sentence.strip())
+                current_sentence = ""
+        if current_sentence:  # Add any remaining text
+            sentences.append(current_sentence.strip())
+
+        # Remove duplicates while preserving order
+        unique_sentences = []
+        for sentence in sentences:
+            if sentence not in unique_sentences:
+                unique_sentences.append(sentence)
+
+        # Join the sentences back together
+        return ' '.join(unique_sentences)
