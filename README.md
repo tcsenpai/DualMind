@@ -1,6 +1,6 @@
 # DualMind: AI Conversation Simulator
 
-DualMind is an innovative AI conversation simulator that facilitates engaging dialogues between two AI models using the Ollama API. It offers both a command-line interface (CLI) and a Streamlit-based web interface for immersive and customizable AI interactions.
+DualMind is an innovative AI conversation simulator that facilitates engaging dialogues between two AI models using the Ollama API. It offers a command-line interface (CLI) for immersive and customizable AI interactions.
 
 ![Screenshot](imgs/screenshot.png)
 
@@ -8,15 +8,13 @@ DualMind is an innovative AI conversation simulator that facilitates engaging di
 
 - 🤖 Dual-model conversation: Engage two different AI models in a thought-provoking dialogue
 - 🎭 Customizable system prompts: Tailor the behavior and personality of each AI model
-- 🖥️ Multiple interface options:
-  - Command-line interface for quick interactions
-  - Streamlit web interface for a user-friendly experience
+- 🖥️ Command-line interface for quick interactions
 - 🛠️ Conversation customization:
   - Adjust the number of exchanges
   - Modify the initial prompt
   - Select different AI models
-- 💾 Save and download conversation logs
-- 🎨 Responsive and visually appealing design
+- 💾 Save conversation logs
+- 🔢 Token count display and limit: Monitor the token usage for each message and limit the conversation to a specified number of tokens.
 
 ## Prerequisite: Ollama
 
@@ -46,6 +44,7 @@ Please refer to [Ollama](https://ollama.com/download) to install Ollama on your 
    MODEL_1=llama2
    MODEL_2=mistral
    INITIAL_PROMPT="Let's discuss the future of AI. What are your thoughts on its potential impact on society?"
+   MAX_TOKENS=8000
    ```
 
    Feel free to use the env.example file as a template.
@@ -54,23 +53,11 @@ Please refer to [Ollama](https://ollama.com/download) to install Ollama on your 
 
 ## Usage
 
-### Command-line Interface
-
 To run DualMind in CLI mode:
 
 ```sh
 ./run_cli.sh
 ```
-
-### Streamlit Web Interface
-
-To run DualMind in Streamlit mode:
-
-```sh
-./run_streamlit.sh
-```
-
-Then, open your web browser and navigate to the URL provided in the terminal (usually `http://localhost:8501`).
 
 ## Customization
 
@@ -78,18 +65,17 @@ Then, open your web browser and navigate to the URL provided in the terminal (us
 
 You can customize the system prompts for each AI model by editing the `system_prompt_1.txt` and `system_prompt_2.txt` files in the project root.
 
-### Styling
+### Options
 
-The appearance of the Streamlit interface can be customized by modifying the `style/custom.css` file.
+You can customize the options for the conversation by editing the `options.json` file in the project root.
+
 
 ## Project Structure
 
 - `main.py`: Entry point of the application
 - `ai_conversation.py`: Core logic for AI conversations
-- `streamlit_app.py`: Streamlit web interface implementation
-- `style/custom.css`: Custom styles for the web interface
 - `run_cli.sh`: Shell script to run the CLI version
-- `run_streamlit.sh`: Shell script to run the Streamlit version
+
 
 ## Contributing
 
@@ -102,4 +88,3 @@ This project is open source and available under the [MIT License](LICENSE).
 ## Acknowledgements
 
 - This project uses the [Ollama](https://ollama.ai/) API for AI model interactions.
-- The web interface is built with [Streamlit](https://streamlit.io/).

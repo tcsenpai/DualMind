@@ -11,7 +11,7 @@ class AIConversation:
         system_prompt_1,
         system_prompt_2,
         ollama_endpoint,
-        max_tokens=4000,
+        max_tokens=4000, 
     ):
         # Initialize conversation parameters and Ollama client
         self.model_1 = model_1
@@ -41,7 +41,7 @@ class AIConversation:
                 break  # Avoid removing the system message
         return messages
 
-    def start_conversation(self, initial_message, num_exchanges=0):
+    def start_conversation(self, initial_message, num_exchanges=0, options=None):
         # Main conversation loop
         current_message = initial_message
         color_1, color_2 = "cyan", "yellow"
@@ -78,10 +78,7 @@ class AIConversation:
                 response = self.client.chat(
                     model=self.current_model,
                     messages=messages,
-                    options={
-                        "temperature": 0.7,  # Control randomness
-                        "repeat_penalty": 1.2,  # Penalize repetition
-                    },
+                    options=options,
                 )
                 response_content = response["message"]["content"]
 

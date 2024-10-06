@@ -1,6 +1,6 @@
 python-dotenv
 requests
 termcolor
-streamlit
 Pillow
 tiktoken
+ollama

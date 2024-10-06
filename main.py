@@ -1,5 +1,5 @@
 import os
-import argparse
+import json
 from dotenv import load_dotenv, set_key
 from ai_conversation import AIConversation
 
@@ -7,6 +7,11 @@ def load_system_prompt(filename):
     """Load the system prompt from a file."""
     with open(filename, "r") as file:
         return file.read().strip()
+
+def load_options_from_json(filename):
+    """Load options from a JSON file."""
+    with open(filename, "r") as file:
+        return json.load(file)
 
 def main():
     # Load environment variables
@@ -25,38 +30,24 @@ def main():
     max_tokens = int(os.getenv("MAX_TOKENS", 4000))
     print(f"Max tokens: {max_tokens}")
 
+    # Load options from JSON file
+    options = load_options_from_json("options.json")
+    print(f"Options: {options}")
+
     # Initialize the AI conversation object
     conversation = AIConversation(
         model_1, model_2, system_prompt_1, system_prompt_2, ollama_endpoint, max_tokens
     )
 
-    # Set up command-line argument parser
-    parser = argparse.ArgumentParser(description="AI Conversation")
-    parser.add_argument("--cli", action="store_true", help="Run in CLI mode")
-    parser.add_argument(
-        "--streamlit", action="store_true", help="Run in Streamlit mode"
-    )
-    args = parser.parse_args()
 
     # Run the appropriate interface based on command-line arguments
-    if args.cli:
-        run_cli(conversation, initial_prompt)
-    elif args.streamlit:
-        run_streamlit(conversation, initial_prompt)
-    else:
-        print("Please specify either --cli or --streamlit mode.")
+    run_cli(conversation, initial_prompt, options)
 
-def run_cli(conversation, initial_prompt):
+def run_cli(conversation, initial_prompt, options):
     """Run the conversation in command-line interface mode."""
     load_dotenv()
-    conversation.start_conversation(initial_prompt, num_exchanges=0)
+    conversation.start_conversation(initial_prompt, num_exchanges=0, options=options)
 
-def run_streamlit(conversation, initial_prompt):
-    """Run the conversation in Streamlit interface mode."""
-    import streamlit as st
-    from streamlit_app import streamlit_interface
-
-    streamlit_interface(conversation, initial_prompt)
 
 if __name__ == "__main__":
     main()
