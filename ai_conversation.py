@@ -85,10 +85,10 @@ class AIConversation:
                 # Post-process to remove repetition
                 response_content = self.remove_repetition(response_content)
 
-                # Format and print the response
+                # Format and print the response with a bubble
                 model_name = f"{self.current_model.upper()} ({name}):"
-                formatted_response = f"{model_name}\n{response_content}\n"
-                print(colored(formatted_response, color))
+                formatted_response = self.create_bubble(response_content, color, model_name)
+                print(formatted_response)
                 conversation_log.append(
                     {"role": "assistant", "content": formatted_response}
                 )
@@ -162,3 +162,20 @@ class AIConversation:
 
         # Join the sentences back together
         return " ".join(unique_sentences)
+
+    def create_bubble(self, text, color, header):
+        # Split the text into lines
+        lines = text.split('\n')
+        # Find the maximum line length
+        max_length = max(len(line) for line in lines)
+        
+        # Create the bubble
+        bubble = []
+        bubble.append(colored(f"╭{'─' * (max_length + 2)}╮", color))
+        bubble.append(colored(f"│ {header:<{max_length}} │", color))
+        bubble.append(colored(f"├{'─' * (max_length + 2)}┤", color))
+        for line in lines:
+            bubble.append(colored(f"│ {line:<{max_length}} │", color))
+        bubble.append(colored(f"╰{'─' * (max_length + 2)}╯", color))
+        
+        return '\n'.join(bubble)
