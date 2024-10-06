@@ -33,12 +33,22 @@ class AIConversation:
     def trim_messages(self, messages):
         # Trim messages to stay within the token limit
         if self.count_tokens(messages) > self.max_tokens:
-            print(colored(f"[SYSTEM] Max tokens reached. Trimming messages...", "magenta"))
-        while self.count_tokens(messages) > self.max_tokens:
-            if len(messages) > 1:
-                messages.pop(1)  # Remove the oldest non-system message
-            else:
-                break  # Avoid removing the system message
+            print(colored(f"[SYSTEM] Max tokens reached. Sliding context window...", "magenta"))
+            
+            # Keep the system prompt (first message)
+            system_prompt = messages[0]
+            messages = messages[1:]
+            
+            # Remove messages from the beginning until we're under the token limit
+            while self.count_tokens([system_prompt] + messages) > self.max_tokens:
+                if messages:
+                    messages.pop(0)  # Remove the oldest message
+                else:
+                    break  # Avoid removing all messages
+            
+            # Add the system prompt back at the beginning
+            messages.insert(0, system_prompt)
+        
         return messages
 
     def start_conversation(self, initial_message, num_exchanges=0, options=None):
@@ -87,8 +97,8 @@ class AIConversation:
 
                 # Format and print the response with a bubble
                 model_name = f"{self.current_model.upper()} ({name}):"
-                formatted_response = self.create_bubble(response_content, color, model_name)
-                print(formatted_response)
+                formatted_response = model_name + "|:> " + response_content
+                print(colored(formatted_response, color))
                 conversation_log.append(
                     {"role": "assistant", "content": formatted_response}
                 )
@@ -162,20 +172,3 @@ class AIConversation:
 
         # Join the sentences back together
         return " ".join(unique_sentences)
-
-    def create_bubble(self, text, color, header):
-        # Split the text into lines
-        lines = text.split('\n')
-        # Find the maximum line length
-        max_length = max(len(line) for line in lines)
-        
-        # Create the bubble
-        bubble = []
-        bubble.append(colored(f"╭{'─' * (max_length + 2)}╮", color))
-        bubble.append(colored(f"│ {header:<{max_length}} │", color))
-        bubble.append(colored(f"├{'─' * (max_length + 2)}┤", color))
-        for line in lines:
-            bubble.append(colored(f"│ {line:<{max_length}} │", color))
-        bubble.append(colored(f"╰{'─' * (max_length + 2)}╯", color))
-        
-        return '\n'.join(bubble)
