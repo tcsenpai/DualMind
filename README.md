@@ -27,8 +27,8 @@ Please refer to [Ollama](https://ollama.com/download) to install Ollama on your 
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/yourusername/dualmind.git
-   cd dualmind
+   git clone https://github.com/yourusername/DualMind.git
+   cd DualMind
    ```
 
 2. Install the required dependencies:
@@ -56,7 +56,7 @@ Please refer to [Ollama](https://ollama.com/download) to install Ollama on your 
 To run DualMind in CLI mode:
 
 ```sh
-./run_cli.sh
+./start_cli.sh
 ```
 
 ## Customization
@@ -74,7 +74,7 @@ You can customize the options for the conversation by editing the `options.json`
 
 - `main.py`: Entry point of the application
 - `ai_conversation.py`: Core logic for AI conversations
-- `run_cli.sh`: Shell script to run the CLI version
+- `start_cli.sh`: Shell script to run the CLI version
 
 
 ## Contributing
