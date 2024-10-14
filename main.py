@@ -3,15 +3,21 @@ import json
 from dotenv import load_dotenv, set_key
 from ai_conversation import AIConversation
 
+
 def load_system_prompt(filename):
     """Load the system prompt from a file."""
     with open(filename, "r") as file:
         return file.read().strip()
 
-def load_options_from_json(filename):
+
+def load_options_from_json(filename, max_tokens, limit_tokens):
     """Load options from a JSON file."""
     with open(filename, "r") as file:
-        return json.load(file)
+        options = json.load(file)
+        if limit_tokens:
+            options["num_ctx"] = max_tokens
+        return options
+
 
 def main():
     # Load environment variables
@@ -29,19 +35,27 @@ def main():
     )
     max_tokens = int(os.getenv("MAX_TOKENS", 4000))
     print(f"Max tokens: {max_tokens}")
-
+    limit_tokens = os.getenv("LIMIT_TOKENS", True)
+    limit_tokens = limit_tokens.lower() == "true"
+    print(f"Limit tokens: {limit_tokens}")
     # Load options from JSON file
-    options = load_options_from_json("options.json")
+    options = load_options_from_json("options.json", max_tokens, limit_tokens)
     print(f"Options: {options}")
 
     # Initialize the AI conversation object
     conversation = AIConversation(
-        model_1, model_2, system_prompt_1, system_prompt_2, ollama_endpoint, max_tokens
+        model_1,
+        model_2,
+        system_prompt_1,
+        system_prompt_2,
+        ollama_endpoint,
+        max_tokens,
+        limit_tokens,
     )
-
 
     # Run the appropriate interface based on command-line arguments
     run_cli(conversation, initial_prompt, options)
+
 
 def run_cli(conversation, initial_prompt, options):
     """Run the conversation in command-line interface mode."""

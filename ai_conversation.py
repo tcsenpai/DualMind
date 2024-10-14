@@ -11,7 +11,8 @@ class AIConversation:
         system_prompt_1,
         system_prompt_2,
         ollama_endpoint,
-        max_tokens=4000, 
+        max_tokens=4000,
+        limit_tokens=True
     ):
         # Initialize conversation parameters and Ollama client
         self.model_1 = model_1
@@ -25,14 +26,14 @@ class AIConversation:
         self.ollama_endpoint = ollama_endpoint
         self.tokenizer = tiktoken.encoding_for_model("gpt-3.5-turbo")
         self.max_tokens = max_tokens
-
+        self.limit_tokens = limit_tokens
     def count_tokens(self, messages):
         # Count the total number of tokens in the messages
         return sum(len(self.tokenizer.encode(msg["content"])) for msg in messages)
 
     def trim_messages(self, messages):
         # Trim messages to stay within the token limit
-        if self.count_tokens(messages) > self.max_tokens:
+        if self.limit_tokens and self.count_tokens(messages) > self.max_tokens:
             print(colored(f"[SYSTEM] Max tokens reached. Sliding context window...", "magenta"))
             
             # Keep the system prompt (first message)
@@ -52,6 +53,7 @@ class AIConversation:
         return messages
 
     def start_conversation(self, initial_message, num_exchanges=0, options=None):
+        
         # Main conversation loop
         current_message = initial_message
         color_1, color_2 = "cyan", "yellow"
