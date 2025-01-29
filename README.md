@@ -1,6 +1,6 @@
 # DualMind: AI Conversation Simulator
 
-WARNING: This repository approach has been superseeded by the [Self Conversational AI](https://github.com/tcsenpai/llms-experiments?tab=readme-ov-file#self-conversational-ai) Experiment in [LLM Experiments](https://github.com/tcsenpai/llms-experiments)
+***WARNING: This repository approach has been superseeded by the [Self Conversational AI](https://github.com/tcsenpai/llms-experiments?tab=readme-ov-file#self-conversational-ai) Experiment in [LLM Experiments](https://github.com/tcsenpai/llms-experiments)***
 
 DualMind is an innovative AI conversation simulator that facilitates engaging dialogues between two AI models using the Ollama API. It offers a command-line interface (CLI) for immersive and customizable AI interactions.
 
